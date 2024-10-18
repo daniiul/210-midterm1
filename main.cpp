@@ -54,18 +54,26 @@ public:
             return;
         }
 
+        // creates a pointer to Node and sets it to the head node. Represents a sort of iterator
         Node* temp = head;
+        // traverses linked list until either the given position is reached or the end of the list is reached
         for (int i = 0; i < position && temp; ++i)
             temp = temp->next;
 
+        // If the given position exceeds the size of the list then prints to console that the position exceeds list size.
+        // Also doesn't insert the new node created earlier and returns function
         if (!temp) {
             cout << "Position exceeds list size. Node not inserted.\n";
             delete newNode;
             return;
         }
 
+        // assigns the next node pointer of newNode to that of the node after the found node at given position represented by temp
         newNode->next = temp->next;
+        // assigns the previous node pointer of newNode to that of the node at given position represented by temp
         newNode->prev = temp;
+        /* if the node stored at temp isn't the last node in the linked list, then the next node's previous pointer will be assigned to newNode
+            otherwise */
         if (temp->next)
             temp->next->prev = newNode;
         else
