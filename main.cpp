@@ -73,50 +73,62 @@ public:
         // assigns the previous node pointer of newNode to that of the node at given position represented by temp
         newNode->prev = temp;
         /* if the node stored at temp isn't the last node in the linked list, then the next node's previous pointer will be assigned to newNode
-            otherwise */
+            otherwise if at end of the list newNode will be assigned as the tail of the linked list*/
         if (temp->next)
             temp->next->prev = newNode;
         else
             tail = newNode;
+        // sets the next of the node before newNode to that of newNode
         temp->next = newNode;
     }
 
+    // deletes the first node with the found given value
+    // arguments: integer representing the value of node with value to delete
     void delete_val(int value) {
+        // if list is empty return
         if (!head) return;
-
+        // creates temp node to traverse list
         Node* temp = head;
 
+        // traverses list until it finds the node with the value to be deleted
         while (temp && temp->data != value)
             temp = temp->next;
-
+        // if value not found return
         if (!temp) return;
 
+        // if temp is not head then derefrence next of the previous pointer and make it point to the next node of current temp node
+        // if temp is head then derefrence head and set it to that of the pointer next of temp node
         if (temp->prev)
             temp->prev->next = temp->next;
         else
             head = temp->next;
-
+        // if temp is not tail then rewire the nodes , if temp is tail the set tail to the node before temp
         if (temp->next)
             temp->next->prev = temp->prev;
         else
             tail = temp->prev;
-
+        // deletes the temp node
         delete temp;
     }
-
+    // deletes the node at given position
+    // arguments: integer representing the value of node with value to delete
     void delete_pos(int pos) {
+        // if list is empty print list is empty and return
         if (!head) {
             cout << "List is empty." << endl;
             return;
         }
 
+        // if the given position is 1 or first node in linked list, call pop_front and return
         if (pos == 1) {
             pop_front();
             return;
         }
 
+        // creates a temporary node pointer and sets it that of head
         Node* temp = head;
 
+        // iterates through linked list, if position not found print not found and return
         for (int i = 1; i < pos; i++){
             if (!temp) {
                 cout << "Position doesn't exist." << endl;
@@ -125,24 +137,35 @@ public:
             else
                 temp = temp->next;
         }
+
+        // checks again if temp doesn't exist in case it reaches end of linked list
         if (!temp) {
             cout << "Position doesn't exist." << endl;
             return;
         }
 
+        // if the node was found and is tail of list then calls pop_back method and returns
         if (!temp->next) {
             pop_back();
             return;
         }
 
+        // derefrence previous and nexts of nodes surrounding found node and rewires the list
+        // then deletes the found node stored in temp
         Node* tempPrev = temp->prev;
         tempPrev->next = temp->next;
         temp->next->prev = tempPrev;
         delete temp;
     }
 
+    // pushes a new node to the end of the linked list with given value
+    // arguments: integer representing given value
     void push_back(int v) {
+        //Dynamically allocates memory for new Node object with given value and sets pointer of newNode to that object
         Node* newNode = new Node(v);
+        // if the list is empty sets the new node as head and tail of new list
+        // otherwise sets the newNode to the right of tail and makes the previous node of newNode the former tail node
+        // sets tail to newNode
         if (!tail)
             head = tail = newNode;
         else {
@@ -151,9 +174,14 @@ public:
             tail = newNode;
         }
     }
-
+    // pushes a new node to the beginning of the linked list with given value
+    // arguments: integer representing given value
     void push_front(int v) {
+        //Dynamically allocates memory for new Node object with given value and sets pointer of newNode to that object
         Node* newNode = new Node(v);
+        // if the list is empty sets the new node as head and tail of new list
+        // otherwise sets the newNode to the left of tail and makes the previous node of newNode the former head node
+        // sets head to newNode
         if (!head)
             head = tail = newNode;
         else {
@@ -163,13 +191,14 @@ public:
         }
     }
 
+    // deletes the node at the front of linked list
     void pop_front() {
-
+        // list is empty return and print to screen
         if (!head) {
             cout << "List is empty." << endl;
             return;
         }
-
+        // if list not empty create a pointer to
         Node * temp = head;
 
         if (head->next) {
