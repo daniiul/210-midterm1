@@ -198,60 +198,79 @@ public:
             cout << "List is empty." << endl;
             return;
         }
-        // if list not empty create a pointer to
+        // if list not empty create a pointer to head
         Node * temp = head;
 
+        // if list doesn't contain only one element, change head to next node in list and derefrence previous pointer of new head node
+        // if list is only one element derefrence head and tail
         if (head->next) {
             head = head->next;
             head->prev = nullptr;
         }
         else
             head = tail = nullptr;
+        // delete old head node stored in temp
         delete temp;
     }
 
     void pop_back() {
+         // list is empty return and print to screen
         if (!tail) {
             cout << "List is empty." << endl;
             return;
         }
+        // if list not empty create a pointer to tail
         Node * temp = tail;
-
+        // if list doesn't contain only one element, change previous node of tail to nullptr and derefrence old tail node
+        // if list is only one element derefrence head and tail
         if (tail->prev) {
             tail = tail->prev;
             tail->next = nullptr;
         }
         else
             head = tail = nullptr;
+        // delete old tail node stored in temp
         delete temp;
     }
 
+    //destructor deletes whole list
     ~DoublyLinkedList() {
+        // goes through list deletes all nodes
         while (head) {
             Node* temp = head;
             head = head->next;
             delete temp;
         }
     }
+
+    // prints linked list to screen
     void print() {
+        // iterator node starting at head
         Node* current = head;
+        // if list is empty print to screen and return
         if (!current) {
             cout << "List is empty." << endl;
             return;
         }
+        // itterates through list and prints the data stored in each node
         while (current) {
             cout << current->data << " ";
             current = current->next;
         }
         cout << endl;
     }
-
+    // prints linked list to screen in reverse order from tail end
     void print_reverse() {
+        // iterator node starting at tail
         Node* current = tail;
+
+        // if list is empty print to screen and return
         if (!current) {
             cout << "List is empty." << endl;
             return;
         }
+        // iterates through list and prints data stored in each node
+        // iterates by calling previous of each node until reaches head
         while (current) {
             cout << current->data << " ";
             current = current->prev;
@@ -259,17 +278,25 @@ public:
         cout << endl;
     }
 
+    // prints every other node in the linked list
     void every_other_element()
     {
+        // iterator node starting at head
         Node* current = head;
+
+        // if list is empty print to screen and return
         if (!current) {
             cout << "List is empty." << endl;
             return;
         }
+        // iterates through list and prints data stored in each node
+        // prints every other node, if the if first statement reaches too far falls back on safety net and prints next element instead
         while (current) {
             cout << current->data << " ";
-            current = current->next->next;
+            if (current->next != nullptr)
+                current = current->next->next;
         }
+
         cout << endl;
     }
 };
