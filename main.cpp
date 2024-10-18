@@ -290,7 +290,7 @@ public:
             return;
         }
         // iterates through list and prints data stored in each node
-        // prints every other node, if the if first statement reaches too far falls back on safety net and prints next element instead
+        // prints every other node, if the if first statement reaches too far which can cause overflow error, falls back on safety net and prints next element instead
         while (current) {
             cout << current->data << " ";
             if (current->next != nullptr)
