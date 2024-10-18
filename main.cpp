@@ -258,6 +258,20 @@ public:
         }
         cout << endl;
     }
+
+    void every_other_element()
+    {
+        Node* current = head;
+        if (!current) {
+            cout << "List is empty." << endl;
+            return;
+        }
+        while (current) {
+            cout << current->data << " ";
+            current = current->next->next;
+        }
+        cout << endl;
+    }
 };
 
 int main() {
