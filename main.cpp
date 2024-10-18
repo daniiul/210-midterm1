@@ -295,6 +295,8 @@ public:
             cout << current->data << " ";
             if (current->next != nullptr)
                 current = current->next->next;
+            else
+                current = current->next;
         }
 
         cout << endl;
@@ -304,6 +306,14 @@ public:
 int main() {
     cout << MIN_NR + MIN_LS + MAX_NR + MAX_LS;  // dummy statement to avoid compiler warning
 
+    DoublyLinkedList list;
+
+    for (int i = 1; i <= 5; i++)
+    {
+        list.push_back(i);
+    }
+
+    list.every_other_element();
 
     return 0;
 }
